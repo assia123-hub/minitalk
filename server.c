@@ -6,50 +6,73 @@
 /*   By: aschalh <aschalh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:05:19 by aschalh           #+#    #+#             */
-/*   Updated: 2025/01/31 23:59:20 by aschalh          ###   ########.fr       */
+/*   Updated: 2025/02/01 16:23:08 by aschalh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-void	signal_handler(int signum)
+void ft_putchar(char c)
 {
-	static int				bit = 0;
-	static unsigned char	character = 0;
-
-	if (signum == SIGUSR1)
-		character |= (1 << (7 - bit));
-		else if (signum == SIGUSR2)
-		character &= ~(1 << (7 - bit));
-
-	bit++;
-	if (bit == 8)
-	{
-		if (character == '\0')
-		{
-			write(1, "\n", 1);
-		}
-		else
-		{
-			write(1, &character, 1);
-		}
-		bit = 0;
-		character = 0;
-	}
+    write(1, &c, 1);
 }
 
-int	main(void)
+void    ft_putnbr(int n)
 {
-	write(1, "Server PID: ", 12);
-	printf("%d\n", getpid());
-
-	
-	signal(SIGUSR1, signal_handler);
-	signal(SIGUSR2, signal_handler);
-
-	while (1)
-		pause();
+    if (n == -2147483648)
+        write(1, "-2147483648", 11);
+    else if (n >= 0 && n <= 9)
+        ft_putchar(n + '0');
+    else if (n > 9)
+    {
+        ft_putnbr(n / 10);
+        ft_putnbr(n % 10);
+    }
+    else if (n < 0)
+    {
+        write(1, "-", 1);
+        ft_putnbr(-n);
+    }
 }
 
+void    handler(int signum)
+{
+    static char    character = 0;
+    static int    bit = 0;
 
+    if (signum == SIGUSR1)
+        character |= (1 << (7 - bit));
+    bit++;
+
+    if (bit == 8)
+    {
+        write(1, &character, 1);
+        if (character == '\0')
+            write(1, "\n", 1);
+        character = 0;
+        bit = 0;
+    }
+}
+
+void    setup_signals(void)
+{
+    signal(SIGUSR1, handler);
+    signal(SIGUSR2, handler);
+}
+
+int    main(void)
+{
+    write(1, "PID: ", 5);
+    ft_putnbr(getpid());
+    write(1, "\n", 1);
+
+    setup_signals();
+
+    while (1)
+        pause();
+    return (0);
+}
 
