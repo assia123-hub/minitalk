@@ -6,7 +6,7 @@
 /*   By: aschalh <aschalh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:04:52 by aschalh           #+#    #+#             */
-/*   Updated: 2025/02/02 01:31:39 by aschalh          ###   ########.fr       */
+/*   Updated: 2025/02/02 16:21:31 by aschalh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	main(int ac, char **av)
 	pid = ft_atoi(av[1]);
 	if (pid <= 0 || pid >= INT_MAX)
 	{
-		write(1, "PID makaynch\n", 12);
+		write(1, "PID makhadamch\n", 12);
 		return (1);
 	}
 
