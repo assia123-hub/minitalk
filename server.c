@@ -6,7 +6,7 @@
 /*   By: aschalh <aschalh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:05:19 by aschalh           #+#    #+#             */
-/*   Updated: 2025/02/01 16:23:08 by aschalh          ###   ########.fr       */
+/*   Updated: 2025/02/01 20:59:12 by aschalh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void ft_putchar(char c)
+static void ft_putchar(char c)
 {
     write(1, &c, 1);
 }
 
-void    ft_putnbr(int n)
+static void    ft_putnbr(int n)
 {
     if (n == -2147483648)
         write(1, "-2147483648", 11);
@@ -75,4 +75,3 @@ int    main(void)
         pause();
     return (0);
 }
-
