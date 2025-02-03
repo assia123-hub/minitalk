@@ -6,14 +6,13 @@
 /*   By: aschalh <aschalh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:05:19 by aschalh           #+#    #+#             */
-/*   Updated: 2025/02/01 20:59:12 by aschalh          ###   ########.fr       */
+/*   Updated: 2025/02/04 00:40:58 by aschalh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 static void ft_putchar(char c)
 {
@@ -38,16 +37,16 @@ static void    ft_putnbr(int n)
     }
 }
 
-void    handler(int signum)
+void    ft_handler(int signum)
 {
     static char    character = 0;
     static int    bit = 0;
 
-    if (signum == SIGUSR1)
+    if (signum == SIGUSR1) 
         character |= (1 << (7 - bit));
-    bit++;
+    bit++; 
 
-    if (bit == 8)
+    if (bit == 8) 
     {
         write(1, &character, 1);
         if (character == '\0')
@@ -57,21 +56,21 @@ void    handler(int signum)
     }
 }
 
-void    setup_signals(void)
+void    ft_signals(void) 
 {
-    signal(SIGUSR1, handler);
-    signal(SIGUSR2, handler);
+    signal(SIGUSR1, ft_handler);
+    signal(SIGUSR2, ft_handler);
 }
 
 int    main(void)
 {
-    write(1, "PID: ", 5);
+    write(1, "PID: ", 6);
     ft_putnbr(getpid());
-    write(1, "\n", 1);
+    write(1, "\n", 1); 
 
-    setup_signals();
+    ft_signals();
 
-    while (1)
-        pause();
+    while (1) 
+        pause(); 
     return (0);
 }

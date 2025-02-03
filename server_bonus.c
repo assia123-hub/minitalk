@@ -6,14 +6,13 @@
 /*   By: aschalh <aschalh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:05:29 by aschalh           #+#    #+#             */
-/*   Updated: 2025/02/01 21:01:22 by aschalh          ###   ########.fr       */
+/*   Updated: 2025/02/04 00:41:42 by aschalh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 static void ft_putchar(char c)
 {
@@ -38,7 +37,7 @@ static void    ft_putnbr(int n)
     }
 }
 
-void    handler(int signum)
+void    ft_handler(int signum)
 {
     static char    character = 0;
     static int    bit = 0;
@@ -57,10 +56,10 @@ void    handler(int signum)
     }
 }
 
-void    setup_signals(void)
+void    ft_signals(void)
 {
-    signal(SIGUSR1, handler);
-    signal(SIGUSR2, handler);
+    signal(SIGUSR1, ft_handler);
+    signal(SIGUSR2, ft_handler);
 }
 
 int    main(void)
@@ -69,7 +68,7 @@ int    main(void)
     ft_putnbr(getpid());
     write(1, "\n", 1);
 
-    setup_signals();
+    ft_signals();
 
     while (1)
         pause();

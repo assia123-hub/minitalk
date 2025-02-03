@@ -6,16 +6,15 @@
 /*   By: aschalh <aschalh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:05:09 by aschalh           #+#    #+#             */
-/*   Updated: 2025/02/02 01:25:00 by aschalh          ###   ########.fr       */
+/*   Updated: 2025/02/03 21:25:45 by aschalh          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 #include <signal.h>
-#include <stdlib.h>
 #include <unistd.h>
 
-int	ft_atoi(const char *str)
+static int	ft_atoi(const char *str)
 {
 	int	i;
 	int	sign;
@@ -39,7 +38,7 @@ int	ft_atoi(const char *str)
 	}
 	return (res * sign);
 }
-void	send_signal(int pid, unsigned char character)
+void	send_signals(int pid, unsigned char character)
 {
 	int	i;
 
@@ -50,7 +49,7 @@ void	send_signal(int pid, unsigned char character)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(500);
+		usleep(800);
 		i--;
 	}
 }
@@ -62,21 +61,21 @@ int	main(int ac, char **av)
 
 	if (ac != 3)
 	{
-		write(1, "Usage: ./client <PID> <message>\n", 31);
+		write(1, "error using: ./client_bonus PID \"message\"\n", 43);
 		return (1);
 	}
 	i = 0;
-	pid = atoi(av[1]);
+	pid = ft_atoi(av[1]);
 	if (pid <= 0 || pid >= INT_MAX)
 	{
-		write(1, "Invalid PID\n", 12);
+		write(1, "PID makhdamch\n", 15);
 		return (1);
 	}
 	while (av[2][i])
 	{
-		send_signal(pid, av[2][i]);
+		send_signals(pid, av[2][i]);
 		i++;
 	}
-	send_signal(pid, '\0');
+	send_signals(pid, '\0');
 	return (0);
 }
